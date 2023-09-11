@@ -10,3 +10,6 @@ export const selectText =
 export const selectDone = 
     ({ done }) => done
 
+export const compareTodos =
+    (left, right) => selectId(left) === selectId(right) && selectText(left) === selectText(right)
+
