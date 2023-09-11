@@ -21,22 +21,35 @@
 </script>
 
 <template>
-  <TodoForm 
-    @add-todo="handleAddTodo"
-    :areControlsDisabled="store.shouldDisableUI()"
-  />
+  <main>
+    <TodoForm 
+      @add-todo="handleAddTodo"
+      :areControlsDisabled="store.shouldDisableUI()"
+    />
 
-  <Todo 
-    v-for="todo in store.list()" 
-    :key="selectId(todo)" 
-    :record="todo"
-    :areControlsDisabled="store.shouldDisableUI()"
-    @delete="handleDelete"
-    @change-status="handleChangeStatus"
-  />
+    <Todo 
+      v-for="todo in store.list()" 
+      :key="selectId(todo)" 
+      :record="todo"
+      :areControlsDisabled="store.shouldDisableUI()"
+      @delete="handleDelete"
+      @change-status="handleChangeStatus"
+    />
 
-  <span v-if="store.shouldDisableUI()">
-    Loading...
-  </span>
+    <span v-if="store.shouldDisableUI()">
+      Loading...
+    </span>
+  </main>
 </template>
 
+<style scoped>
+  main {
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+</style>
