@@ -122,6 +122,7 @@ export default reactive({
 
     _clear() {
         this.todos = []
+        this.controlsDisabled = false
     },
 
     _assertOK(res) {

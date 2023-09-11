@@ -53,4 +53,15 @@ describe('TodoForm', () => {
         
         screen.getByTestId('error')
     }, { timeout: 100_000 })
+
+
+    it('should render input and submit button as disabled if areControlsDisabled prop is set to true.', async () => {
+        const screen = render(TodoForm, { props: { areControlsDisabled: true } })
+        
+        const input = screen.getByTestId('todo-text-input')
+        const btn = screen.getByTestId('todo-add-button')
+
+        expect(input).toBeDisabled()
+        expect(btn).toBeDisabled()
+    })
 })

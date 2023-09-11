@@ -42,4 +42,17 @@ describe('Todo', () => {
         
         expect(screen.emitted()['delete']).toEqual([[todo]])
     })
+
+    it('should render button & checkbox as disabled if areControlsDisabled is true.', () => {
+        const screen = render(Todo, {props: {
+            record: todo,
+            areControlsDisabled: true
+        }})
+        
+        const deleteButton = screen.getByTestId(`todo-delete-${selectId(todo)}`)
+        const checkbox = screen.getByTestId(`todo-checkbox-${selectId(todo)}`)
+
+        expect(deleteButton).toBeDisabled()
+        expect(checkbox).toBeDisabled()
+    })
 })

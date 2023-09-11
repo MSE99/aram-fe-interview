@@ -34,5 +34,9 @@
     @delete="handleDelete"
     @change-status="handleChangeStatus"
   />
+
+  <span v-if="store.shouldDisableUI()">
+    Loading...
+  </span>
 </template>
 

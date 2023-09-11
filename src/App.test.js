@@ -69,4 +69,11 @@ describe('App', () => {
         expect(store.changeStatus).toHaveBeenCalledOnce()
         expect(store.changeStatus).toHaveBeenCalledWith(todo)
     })
+
+    it('should render loading if the controls are disabled.', async () => {
+        vi.spyOn(store, 'shouldDisableUI').mockReturnValue(true)
+
+        const screen = render(App)
+        screen.getByText('Loading...')
+    })
 })
