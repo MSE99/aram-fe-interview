@@ -9,6 +9,7 @@
     const handleSubmit = _ => {
         if (!input.text.trim()) return
         emit('add-todo', input.text)
+        input.text = ''
     }
 </script>
 

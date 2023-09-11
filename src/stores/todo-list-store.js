@@ -1,5 +1,6 @@
 import { reactive } from 'vue'
-import { sameTodo } from './todo'
+import { sameTodo, changeStatus, selectId, selectDone } from './todo'
+import endpoints from './endpoints'
 
 export default reactive({
     todos: [],
@@ -8,20 +9,85 @@ export default reactive({
         return this.todos
     },
 
-    fetch() {
-        throw new Error('NOT IMPLEMENTED')
+    async fetch() {
+        try {
+            const res = await fetch(endpoints.getTasksURL, {
+                headers: endpoints.headers,
+                mode: 'cors',
+                method: 'POST'
+            })
+            
+            this._assertOK(res)
+            
+            const tasks = await res.json()
+            this.todos = tasks
+        } catch (err) {
+            console.error(err)
+        }
     },
 
-    add(text) {
-        throw new Error('NOT IMPLEMENTED')
+    async add(text) {
+        try {
+            const res = await fetch(endpoints.addTaskURL, {
+                headers: endpoints.headers,
+                method: 'POST',
+                body: JSON.stringify({
+                    status: false,
+                    text
+                }),
+                mode: 'cors'
+            })
+
+            this._assertOK(res)
+
+            const { task } = await res.json()
+            this.todos = [...this.todos, task]
+        } catch (err) {
+            console.error(err)
+        }
     },
 
-    delete() {
-        throw new Error('NOT IMPLEMENTED')
+    async delete(todo) {
+        try {
+            const res = await fetch(endpoints.deleteTaskURL, {
+                headers: endpoints.headers,
+                method: 'POST',
+                mode: 'cors',
+                body: JSON.stringify({
+                    task_id: selectId(todo)
+                })
+            })
+
+            this._assertOK(res)
+
+            this.todos = this.todos.filter((otherTodo) => !sameTodo(todo, otherTodo))
+        } catch (err) {
+            console.error(err)
+        }
     },
 
-    changeStatus() {
-        throw new Error('NOT IMPLEMENTED')
+    async changeStatus(todo) {
+        try {
+            const changed = changeStatus(todo)
+
+            const res = await fetch(endpoints.changeTaskURL, {
+                headers: endpoints.headers,
+                method: 'POST',
+                body: JSON.stringify({
+                    task_id: selectId(changed),
+                    status: selectDone(changed)
+                }),
+                mode: 'cors'
+            })
+
+            this._assertOK(res)
+
+            this.todos = this.todos.map((otherTodo) => {
+                return sameTodo(todo, otherTodo) ? changed : otherTodo
+            })
+        } catch (err) {
+            console.error(err)
+        }
     },
 
     // Small helper API to ease testing
@@ -37,5 +103,10 @@ export default reactive({
 
     _clear() {
         this.todos = []
+    },
+
+    _assertOK(res) {
+        if (!res.ok)
+            throw new Error(`Request failed with status ${res.status}`)
     }
 })

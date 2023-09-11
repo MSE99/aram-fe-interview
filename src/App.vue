@@ -18,6 +18,8 @@
   const handleChangeStatus = (todo) => {
     store.changeStatus(todo)
   }
+
+  window.store = store
 </script>
 
 <template>
