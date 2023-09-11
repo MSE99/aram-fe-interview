@@ -1,5 +1,5 @@
 import { reactive } from 'vue'
-import { compareTodos } from './todo'
+import { sameTodo } from './todo'
 
 export default reactive({
     todos: [],
@@ -14,7 +14,7 @@ export default reactive({
     },
 
     _remove(todo) {
-        const nextTodos = this.todos.filter(t => !compareTodos(t, todo))
+        const nextTodos = this.todos.filter(t => !sameTodo(t, todo))
         this.todos = nextTodos
     },
 
