@@ -18,19 +18,19 @@
   const handleChangeStatus = (todo) => {
     store.changeStatus(todo)
   }
-
-  window.store = store
 </script>
 
 <template>
   <TodoForm 
     @add-todo="handleAddTodo"
+    :areControlsDisabled="store.shouldDisableUI()"
   />
 
   <Todo 
     v-for="todo in store.list()" 
     :key="selectId(todo)" 
     :record="todo"
+    :areControlsDisabled="store.shouldDisableUI()"
     @delete="handleDelete"
     @change-status="handleChangeStatus"
   />

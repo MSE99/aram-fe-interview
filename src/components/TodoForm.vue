@@ -1,6 +1,7 @@
 <script setup>
     import { reactive } from 'vue'
 
+    defineProps(['areControlsDisabled'])
     const emit = defineEmits(['add-todo'])
     
     const state = reactive({
@@ -30,15 +31,17 @@
 
 <template>
     <form @submit.prevent="handleSubmit">
-        <label>
-            Create Todo:
-            <input name="text" data-testid="todo-text-input" type="text" v-model="state.text" />
-        </label>
-
-        <button data-testid="todo-add-button">Add</button>
-    
-        <p data-testid="error">
-            {{ state.error }}
-        </p>
+        <fieldset :disabled="areControlsDisabled">
+            <label>
+                Create Todo:
+                <input name="text" data-testid="todo-text-input" type="text" v-model="state.text" />
+            </label>
+            
+            <button data-testid="todo-add-button">Add</button>
+            
+            <p data-testid="error">
+                {{ state.error }}
+            </p>
+        </fieldset>
     </form>    
 </template>

@@ -4,12 +4,17 @@ import endpoints from './endpoints'
 
 export default reactive({
     todos: [],
+    controlsDisabled: false,
 
     list() {
         return this.todos
     },
 
+    shouldDisableUI() { return this.controlsDisabled },
+
     async fetch() {
+        this.controlsDisabled = true
+        
         try {
             const res = await fetch(endpoints.getTasksURL, {
                 headers: endpoints.headers,
@@ -23,10 +28,14 @@ export default reactive({
             this.todos = tasks
         } catch (err) {
             console.error(err)
+        } finally {
+            this.controlsDisabled = false
         }
     },
 
     async add(text) {
+        this.controlsDisabled = true
+
         try {
             const res = await fetch(endpoints.addTaskURL, {
                 headers: endpoints.headers,
@@ -44,10 +53,14 @@ export default reactive({
             this.todos = [...this.todos, task]
         } catch (err) {
             console.error(err)
+        } finally {
+            this.controlsDisabled = false
         }
     },
 
     async delete(todo) {
+        this.controlsDisabled = true
+
         try {
             const res = await fetch(endpoints.deleteTaskURL, {
                 headers: endpoints.headers,
@@ -63,10 +76,14 @@ export default reactive({
             this.todos = this.todos.filter((otherTodo) => !sameTodo(todo, otherTodo))
         } catch (err) {
             console.error(err)
+        } finally {
+            this.controlsDisabled = false
         }
     },
 
     async changeStatus(todo) {
+        this.controlsDisabled = true
+        
         try {
             const changed = changeStatus(todo)
 
@@ -87,6 +104,8 @@ export default reactive({
             })
         } catch (err) {
             console.error(err)
+        } finally {
+            this.controlsDisabled = false
         }
     },
 
