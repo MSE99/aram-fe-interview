@@ -13,13 +13,13 @@
         const cleaned = state.text.trim()
         
         if (cleaned.length === 0) {
-            state.error = 'Please enter a todo'
+            state.error = '🔥 Please enter a todo'
             return
         } else if (cleaned.length < 10) {
-            state.error = 'Must be over 10 characters long'
+            state.error = '🔥 Must be over 10 characters long'
             return
         } else if (cleaned.length > 1000) {
-            state.error = 'Are you kidding me?'
+            state.error = '🔥 Are you kidding me?'
             return
         }
 
@@ -32,7 +32,7 @@
 <template>
     <form @submit.prevent="handleSubmit">
         <fieldset :disabled="areControlsDisabled">
-            <label for="text">New todo</label>
+            <label for="text">✨ New todo</label>
             <input 
                 placeholder="Todo..."
                 id="text" 
@@ -42,7 +42,7 @@
                 v-model="state.text" 
             />
             
-            <button data-testid="todo-add-button">Add</button>
+            <button data-testid="todo-add-button">add</button>
             
             <p data-testid="error">
                 {{ state.error }}

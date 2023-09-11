@@ -36,8 +36,8 @@
       @change-status="handleChangeStatus"
     />
 
-    <span v-if="store.shouldDisableUI()">
-      Loading...
+    <span data-testid="loading" v-if="store.shouldDisableUI()">
+      ⏱️ Loading...
     </span>
   </main>
 </template>
@@ -51,5 +51,9 @@
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
+  }
+
+  span {
+    font-size: 1.5rem;
   }
 </style>

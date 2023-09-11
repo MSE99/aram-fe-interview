@@ -24,8 +24,40 @@
             :disabled="areControlsDisabled"
         />
         
-        {{ selectText(props.record) }}
+        <span :class="selectDone(props.record) ? 'line-through' : ''">
+            {{ selectText(props.record) }}
+        </span>
 
-        <button :data-testid="`todo-delete-${selectId(props.record)}`" @click="emitDelete" :disabled="areControlsDisabled">del</button>
+        <button :data-testid="`todo-delete-${selectId(props.record)}`" @click="emitDelete" :disabled="areControlsDisabled">
+            🗑️
+        </button>
     </div>
 </template>
+
+<style scoped>
+    div {
+        margin: 2.5rem 0;
+        display: flex;
+    }
+
+    input {
+        margin-right: 1rem;
+    }
+
+    button {
+        margin-left: auto;
+        opacity: 0;
+        transition: all ease-in 80ms;
+    }
+    
+    button:hover { cursor: pointer; }
+
+
+    div:hover > button {
+        opacity: 1;
+    }
+
+    .line-through {
+        text-decoration: line-through;
+    }
+</style>

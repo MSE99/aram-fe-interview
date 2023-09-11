@@ -74,6 +74,6 @@ describe('App', () => {
         vi.spyOn(store, 'shouldDisableUI').mockReturnValue(true)
 
         const screen = render(App)
-        screen.getByText('Loading...')
+        screen.getByTestId('loading')
     })
 })
