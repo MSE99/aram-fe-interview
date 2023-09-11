@@ -36,10 +36,10 @@ describe('App', () => {
 
         const screen = render(App)
 
-        await userEvent.type(screen.getByTestId('todo-text-input'), 'foo{Enter}')
+        await userEvent.type(screen.getByTestId('todo-text-input'), ' foo is great bar is none baz is all!      {Enter}')
         
         expect(store.add).toHaveBeenCalledOnce()
-        expect(store.add).toHaveBeenCalledWith('foo')
+        expect(store.add).toHaveBeenCalledWith('foo is great bar is none baz is all!')
     })
 
     it('should call delete when delete button is clicked.', async () => {

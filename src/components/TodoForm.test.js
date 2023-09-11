@@ -23,9 +23,34 @@ describe('TodoForm', () => {
         const input = screen.getByTestId('todo-text-input')
         const btn = screen.getByTestId('todo-add-button')
     
-        await userEvent.type(input, 'Foo is great bar is none!')
+        await userEvent.type(input, 'Lorem ipsum lorem lorem lorem lore must be greater than 10')
         await userEvent.click(btn)
 
-        expect(screen.emitted()['add-todo']).toEqual([['Foo is great bar is none!']])
+        expect(screen.emitted()['add-todo']).toEqual([['Lorem ipsum lorem lorem lorem lore must be greater than 10']])
+        expect(input).toHaveValue('')
     })
+
+    it('should render an error if the input is less than 10 chars.', async () => {
+        const screen = render(TodoForm)
+        
+        const input = screen.getByTestId('todo-text-input')
+        const btn = screen.getByTestId('todo-add-button')
+    
+        await userEvent.type(input, 'Lorem ipsum lorem lorem lorem lore must be greater than 10')
+        await userEvent.click(btn)
+        
+        screen.getByTestId('error')
+    })
+
+    it('should render an error if the input is more than 1000 chars.', async () => {
+        const screen = render(TodoForm)
+        
+        const input = screen.getByTestId('todo-text-input')
+        const btn = screen.getByTestId('todo-add-button')
+    
+        await userEvent.type(input, '1'.repeat(1001))
+        await userEvent.click(btn)
+        
+        screen.getByTestId('error')
+    }, { timeout: 100_000 })
 })
