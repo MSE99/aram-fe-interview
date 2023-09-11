@@ -8,6 +8,23 @@ export default reactive({
         return this.todos
     },
 
+    fetch() {
+        throw new Error('NOT IMPLEMENTED')
+    },
+
+    add(text) {
+        throw new Error('NOT IMPLEMENTED')
+    },
+
+    delete() {
+        throw new Error('NOT IMPLEMENTED')
+    },
+
+    changeStatus() {
+        throw new Error('NOT IMPLEMENTED')
+    },
+
+    // Small helper API to ease testing
     _add(todo) {
         const nextTodos = [...this.todos, todo]
         this.todos = nextTodos
